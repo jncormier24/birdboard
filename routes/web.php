@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('projects.index');
 });
 
 Route::group(['middleware' => 'auth'], function () {
@@ -21,7 +21,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/projects/{project}', 'ProjectsController@show')->name('projects.show');
     Route::post('/projects', 'ProjectsController@store')->name('projects.store');
 
-    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/home', function () {
+        return redirect()->route('projects.index');
+    });
 });
 
 
