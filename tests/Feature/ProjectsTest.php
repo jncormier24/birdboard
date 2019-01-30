@@ -11,11 +11,21 @@ class ProjectsTest extends TestCase
     use WithFaker, RefreshDatabase;
 
     /** @test */
+    public function a_user_must_be_logged_in_to_create_a_project()
+    {
+        $project = [];
+
+        $this->post('/projects', $project)->assertRedirect('login');
+    }
+
+    /** @test */
     public function a_user_can_create_a_project()
     {
+        $this->be(factory(\App\User::class)->create());
+
         $data = [
             'title' => $this->faker->sentence,
-            'description' => $this->faker->paragraph
+            'description' => $this->faker->paragraph,
         ];
 
         $this->post('/projects', $data);
@@ -26,6 +36,7 @@ class ProjectsTest extends TestCase
     /** @test */
     public function a_project_requires_a_title()
     {
+        $this->be(factory(\App\User::class)->create());
         $project = factory(\App\Project::class)->raw(['title' => '']);
 
         $this->post('/projects', $project)->assertSessionHasErrors('title');
@@ -34,6 +45,7 @@ class ProjectsTest extends TestCase
     /** @test */
     public function a_project_requires_a_description()
     {
+        $this->be(factory(\App\User::class)->create());
         $project = factory(\App\Project::class)->raw(['description' => '']);
 
         $this->post('/projects', $project)->assertSessionHasErrors('description');

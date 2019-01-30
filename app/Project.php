@@ -10,6 +10,7 @@ class Project extends Model
     protected $fillable = [
         'title',
         'description',
+        'owner_id'
     ];
 
     /** returns the path tot he project */
