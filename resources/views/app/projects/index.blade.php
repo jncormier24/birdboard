@@ -1,5 +1,6 @@
-<h1>{{ config('app.name') }}</h1>
+@extends('layouts.app')
 
+@section('content')
 <a href="/projects/create">New Project</a>
 <ul>
     @forelse ($projects as $project)
@@ -10,3 +11,4 @@
     <li>No projects yet.</li>
     @endforelse
 </ul>
+@endsection

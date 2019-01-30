@@ -1,3 +1,6 @@
+@extends('layouts.app')
+
+@section('content')
 <h1>Create A Project</h1>
 
 <form method="POST" action="/projects">
@@ -14,4 +17,6 @@
     </div>
 
     <button>Save</button>
+    <a href="/projects">Cancel</a>
 </form>
+@endsection
