@@ -10,7 +10,7 @@ class ProjectsController extends Controller
     /** returns the projects view */
     public function index()
     {
-        $projects = Project::all();
+        $projects = auth()->user()->projects;
 
         return view('app.projects.index', compact('projects'));
     }
@@ -18,7 +18,16 @@ class ProjectsController extends Controller
     /** returns the asked for project */
     public function show(Project $project)
     {
+        if (auth()->user()->isNot($project->owner)) {
+            abort(403);
+        }
         return view('app.projects.show', compact('project'));
+    }
+
+    /** retunrs the create form for a project */
+    public function create()
+    {
+        return view('app.projects.create');
     }
 
     /** store the given data */
@@ -30,5 +39,7 @@ class ProjectsController extends Controller
         ]);
 
         auth()->user()->projects()->create($data);
+
+        return redirect()->route('projects.index');
     }
 }
