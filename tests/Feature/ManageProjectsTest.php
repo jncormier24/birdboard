@@ -23,7 +23,7 @@ class ManageProjectsTest extends TestCase
     /** @test */
     public function a_user_can_create_a_project()
     {
-        $this->be(factory(\App\User::class)->create());
+        $this->makeUser();
 
         $this->get('/projects/create')->assertStatus(200);
 
